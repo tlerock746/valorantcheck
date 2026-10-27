@@ -129,7 +129,7 @@ dialog::backdrop{background:rgba(8,9,13,.6)}
   <label class="tg"><span>Gun Buddy</span><input type="checkbox" id="sBuddies" class="s" checked></label>
   <label class="tg"><span>Spray</span><input type="checkbox" id="sSprays" class="s"></label>
   <label class="tg"><span>Title</span><input type="checkbox" id="sTitles" class="s"></label>
-  <div class="row" style="margin-top:10px"><button class="btn" id="pick" type="button">เลือกรูปเอง</button><button class="btn" id="names" type="button">รายชื่อสกิน (.txt)</button></div>
+  <div class="row" style="margin-top:10px"><button class="btn" id="pick" type="button">เลือกรูปเอง</button><button class="btn" id="names" type="button">รายชื่อ (.txt)</button></div>
   <div id="pickst" class="hint"></div>
  </div>
 </section>
@@ -160,8 +160,8 @@ dialog::backdrop{background:rgba(8,9,13,.6)}
 <div class="hint">คลิกรูปเพื่อเลือก/ยกเลิก รูปที่มีกรอบสีจะแสดงในภาพ • ต้องเปิด “แสดง …” ในแท็บแสดงผลของหมวดนั้นด้วย</div>
 <div id="pgrid"></div></div></dialog>
 <dialog id="ndlg"><div class="dlg">
-<div class="bar"><span class="ttl">รายชื่อสกินที่มีในไอดี</span><span class="grow"></span><button class="btn sm" id="ncopy" type="button">คัดลอก</button><button class="btn sm" id="ntxt" type="button">บันทึกเป็น .txt</button><button class="btn pri sm" id="nclose" type="button">ปิด</button></div>
-<div class="bar"><label class="chk"><input type="checkbox" id="nTier"> ระดับสกิน</label><label class="chk"><input type="checkbox" id="nPrice"> ราคา VP</label><span id="ncount" class="hint"></span></div>
+<div class="bar"><span class="ttl">รายชื่อที่มีในไอดี</span><span class="grow"></span><button class="btn sm" id="ncopy" type="button">คัดลอก</button><button class="btn sm" id="ntxt" type="button">บันทึกเป็น .txt</button><button class="btn pri sm" id="nclose" type="button">ปิด</button></div>
+<div class="bar"><label class="chk"><input type="checkbox" id="nG" checked> สกินปืน</label><label class="chk"><input type="checkbox" id="nB"> Gun Buddy</label><label class="chk"><input type="checkbox" id="nC"> Player Card</label><label class="chk"><input type="checkbox" id="nTier"> ระดับสกิน</label><label class="chk"><input type="checkbox" id="nPrice"> ราคา VP</label><span id="ncount" class="hint"></span></div>
 <textarea id="ntext" readonly spellcheck="false"></textarea></div></dialog>
 <script>
 const $=id=>document.getElementById(id),cv=$("cv"),ctx=cv.getContext("2d"),S=[...document.querySelectorAll(".s")];
@@ -375,22 +375,26 @@ $("pup").onchange=async e=>{const k=tab;for(const f of e.target.files){const u=a
 function nameText(){
   const t=$("nTier").checked,p=$("nPrice").checked,L=[],bar="═".repeat(30),num=x=>x.toLocaleString("en-US");
   const head=title=>{if(L.length)L.push("");L.push(bar,title,bar)};
-  if(own.skins.length){
+  const dist=a=>{const m=new Map();a.forEach(x=>m.set(x.name,(m.get(x.name)||0)+1));return[...m].sort((a,b)=>a[0].localeCompare(b[0]))};
+  if($("nG").checked&&own.skins.length){
     const by={};own.skins.forEach(s=>(by[s.w]??=[]).push(s));
     head("สกินปืน ("+own.skins.length+" สกิน)");
     Object.keys(by).sort((a,b)=>wi(a)-wi(b)||a.localeCompare(b)).forEach(w=>{
       const l=by[w].sort((a,b)=>rk(b)-rk(a)||a.name.localeCompare(b.name));
       L.push("","▌ "+w.toUpperCase()+" ("+l.length+")");
       l.forEach((s,i)=>{const tn=TIERS[s.tier]?.devName;L.push("  "+(i+1)+". "+s.name+(t&&tn?"  ["+tn+"]":"")+(p&&s.price?"  "+num(s.price)+" VP":""))})})}
-  return L.length?L.join("\n"):"ยังไม่มีข้อมูล กรุณาดึงข้อมูลไอดีก่อน (วิธี A หรือ B)"}
-function fillNames(){const x=nameText();$("ntext").value=x;$("ncount").textContent=own.skins.length+" สกิน"}
+  [["nB","Gun Buddy",own.buddies],["nC","Player Card",own.cards]].forEach(([id,title,a])=>{
+    if(!$(id).checked||!a.length)return;head(title+" ("+a.length+")");
+    dist(a).forEach(([nm,c],i)=>L.push("  "+(i+1)+". "+nm+(c>1?" ×"+c:"")))});
+  return L.length?L.join("\n"):"ยังไม่มีข้อมูล กรุณาดึงข้อมูลไอดีก่อน (วิธี A หรือ B) หรือติ๊กหมวดที่ต้องการด้านบน"}
+function fillNames(){const x=nameText();$("ntext").value=x;$("ncount").textContent=own.skins.length+" สกิน • "+own.buddies.length+" Buddy • "+own.cards.length+" Card"}
 $("names").onclick=()=>{$("ndlg").showModal();fillNames()};
 $("nclose").onclick=()=>$("ndlg").close();
-["nTier","nPrice"].forEach(i=>$(i).onchange=fillNames);
+["nG","nB","nC","nTier","nPrice"].forEach(i=>$(i).onchange=fillNames);
 $("ncopy").onclick=async e=>{const b=e.currentTarget,x=$("ntext").value;
   try{await navigator.clipboard.writeText(x)}catch{$("ntext").select();document.execCommand("copy")}
   b.textContent="คัดลอกแล้ว ✓";setTimeout(()=>b.textContent="คัดลอก",1500)};
-$("ntxt").onclick=()=>{const a=document.createElement("a");a.download=($("code").value||"id")+"-skins.txt";a.href=URL.createObjectURL(new Blob(["\ufeff"+$("ntext").value],{type:"text/plain;charset=utf-8"}));a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+$("ntxt").onclick=()=>{const a=document.createElement("a");a.download=($("code").value||"id")+"-items.txt";a.href=URL.createObjectURL(new Blob(["\ufeff"+$("ntext").value],{type:"text/plain;charset=utf-8"}));a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
 init();upd();
 </script>
 
