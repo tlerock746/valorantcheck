@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "functions": {
+    "api/*.js": { "maxDuration": 30 }
+  },
+  "rewrites": [
+    { "source": "/maker", "destination": "/maker.html" },
+    { "source": "/maker/", "destination": "/maker.html" },
+    { "source": "/store", "destination": "/store.html" },
+    { "source": "/store/", "destination": "/store.html" }
+  ]
+}

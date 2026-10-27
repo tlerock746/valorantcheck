@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Valorant ID Maker</title>
+<script>try{var t=localStorage.getItem("theme");if(t&&t!=="auto")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#f2f3f6;--panel:#fff;--sub:#f6f7f9;--line:#e2e4ea;--off:#c9cdd8;--txt:#15171c;--mut:#677083;--ac:#5a49d6;--ac-t:#fff;--ac-s:rgba(90,73,214,.1);--danger:#c93a3a;--sh:0 1px 2px rgba(16,18,24,.08)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#0d0e12;--panel:#15171c;--sub:#1b1e25;--line:#272b35;--off:#3a3f4c;--txt:#e8e9ee;--mut:#8b91a2;--ac:#9181ff;--ac-t:#12101f;--ac-s:rgba(145,129,255,.14);--danger:#e0605e;--sh:0 1px 2px rgba(0,0,0,.4)}}
+:root[data-theme=dark]{color-scheme:dark;--bg:#0d0e12;--panel:#15171c;--sub:#1b1e25;--line:#272b35;--off:#3a3f4c;--txt:#e8e9ee;--mut:#8b91a2;--ac:#9181ff;--ac-t:#12101f;--ac-s:rgba(145,129,255,.14);--danger:#e0605e;--sh:0 1px 2px rgba(0,0,0,.4)}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.55 "IBM Plex Sans Thai","Noto Sans Thai",Sarabun,"Leelawadee UI",Tahoma,sans-serif}
+.app{display:grid;grid-template-columns:380px minmax(0,1fr);min-height:100dvh}
+aside{position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line)}
+.top{padding:16px 20px 0}.brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{margin:0;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.nav{display:flex;margin:14px 0 0;border-bottom:1px solid var(--line)}
+.nav button{flex:1;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:9px 4px;font:inherit;color:var(--mut);cursor:pointer}
+.nav button:hover{color:var(--txt)}.nav button[aria-selected=true]{color:var(--txt);font-weight:600;border-color:var(--ac)}
+.panes{flex:1;overflow:auto;padding:2px 20px 20px}.foot{padding:12px 20px;border-top:1px solid var(--line);background:var(--panel)}
+.g{margin-top:20px}.g>h2{margin:0 0 2px;font-size:13px;font-weight:600}.g>.hint{margin:0 0 6px}
+.f{margin-top:10px}.f>label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hint{font-size:12px;color:var(--mut);margin:4px 0 0}
+input,select,textarea{width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit}
+input::placeholder,textarea::placeholder{color:var(--mut);opacity:.7}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--ac-s)}
+button:focus-visible,summary:focus-visible,.tg:has(input:focus-visible){outline:2px solid var(--ac);outline-offset:2px}
+textarea{resize:vertical;line-height:1.5}#note{min-height:92px}
+input[type=file]{padding:5px;font-size:13px;color:var(--mut)}
+input[type=file]::file-selector-button{font:inherit;font-size:13px;background:var(--sub);color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:4px 10px;margin-right:10px;cursor:pointer}
+input[type=color]{width:56px;height:36px;padding:3px;cursor:pointer}
+.btn{font:inherit;font-weight:500;border-radius:8px;padding:9px 14px;border:1px solid var(--line);background:var(--panel);color:var(--txt);cursor:pointer;box-shadow:var(--sh)}
+.btn:hover{background:var(--sub)}.btn.pri{background:var(--ac);border-color:var(--ac);color:var(--ac-t);font-weight:600}.btn.pri:hover{filter:brightness(1.08)}
+.btn.w{width:100%}.btn.sm{padding:6px 10px;font-size:13px}.btn.gh{background:none;box-shadow:none}
+.seg{display:inline-flex;background:var(--sub);border:1px solid var(--line);border-radius:8px;padding:2px}
+.seg button{border:0;background:none;color:var(--mut);padding:4px 10px;border-radius:6px;font:inherit;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--panel);color:var(--txt);box-shadow:var(--sh)}
+.tg{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.tg:last-of-type{border-bottom:0}
+.tg input{appearance:none;-webkit-appearance:none;width:34px;height:20px;flex:none;padding:0;border:0;border-radius:20px;background:var(--off);position:relative;cursor:pointer;transition:background .15s}
+.tg input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:transform .15s}
+.tg input:checked{background:var(--ac)}.tg input:checked::after{transform:translateX(14px)}.tg input:focus-visible{box-shadow:none}
+details{margin-top:12px;border:1px solid var(--line);border-radius:10px;background:var(--sub)}
+summary{padding:10px 12px;cursor:pointer;font-size:13px;color:var(--mut);list-style:none;display:flex;gap:8px;align-items:center}
+summary::-webkit-details-marker{display:none}summary::before{content:"›";display:inline-block;transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}details[open]>summary{color:var(--txt)}.dbody{padding:0 12px 12px}
+.sws{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.sws button{width:24px;height:24px;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.acrow{display:flex;gap:12px;align-items:center}
+main{padding:20px 28px 32px;min-width:0}
+.pbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+#st{font-size:13px;color:var(--mut);min-width:0}
+canvas{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:10px;box-shadow:0 10px 36px rgba(0,0,0,.22)}
+@media(max-width:860px){.app{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}.panes{overflow:visible}main{padding:16px}}
+/* dialogs */
+dialog{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:18px;width:min(900px,94vw);max-height:90vh;box-shadow:0 24px 70px rgba(0,0,0,.4)}
+dialog::backdrop{background:rgba(8,9,13,.6)}
+.dlg{display:flex;flex-direction:column;gap:12px;max-height:calc(90vh - 38px)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.bar input[type=text]{flex:1;min-width:140px;width:auto}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:13px;cursor:pointer}.chk input{width:auto;accent-color:var(--ac)}
+.grow{flex:1}.ttl{font-weight:600}
+#pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;overflow:auto;padding:2px;min-height:200px}
+.it{position:relative;border:2px solid var(--line);border-radius:10px;background:var(--sub);padding:6px;cursor:pointer;text-align:center;opacity:.5;user-select:none}
+.it:hover{opacity:.8}.it.on{border-color:var(--ac);opacity:1;background:var(--ac-s)}.it img{width:100%;aspect-ratio:1;object-fit:contain;display:block}
+.it span{display:block;font-size:11px;line-height:1.25;margin-top:4px;word-break:break-word}
+.it .x{position:absolute;top:3px;right:3px;background:var(--danger);color:#fff;border:0;border-radius:50%;width:20px;height:20px;padding:0;line-height:1;cursor:pointer}
+#ntext{flex:1;min-height:320px;white-space:pre;overflow:auto;font:13px/1.55 ui-monospace,Consolas,"Noto Sans Thai",monospace;resize:none}
+</style></head><body><div class="app">
+<aside>
+<div class="top">
+ <div class="brand"><h1>Valorant ID Maker</h1><span style="font-size:12.5px;display:flex;gap:10px"><a href="/" style="color:var(--mut)">หน้าแรก</a><a href="/store" style="color:var(--mut)">ร้านค้า</a></span><div class="seg" id="theme" role="group" aria-label="ธีม"><button type="button" data-m="auto">ระบบ</button><button type="button" data-m="light">สว่าง</button><button type="button" data-m="dark">มืด</button></div></div>
+ <div class="nav" role="tablist"><button type="button" role="tab" data-p="id">ไอดี</button><button type="button" role="tab" data-p="shop">ร้านค้า</button><button type="button" role="tab" data-p="show">แสดงผล</button><button type="button" role="tab" data-p="img">ภาพ</button></div>
+</div>
+<div class="panes">
+
+<section class="pane" id="p-id">
+ <div class="g"><h2>เชื่อมต่อ</h2>
+  <div class="f"><label for="shard">Region</label><select id="shard" class="s"><option value="ap">ap (ไทย/เอเชีย)</option><option value="na">na</option><option value="eu">eu</option><option value="kr">kr</option></select></div>
+  <button id="login" type="button" class="btn pri w" style="margin-top:12px">เชื่อมต่อ Riot Client (ใช้ได้เฉพาะเครื่อง)</button>
+  <p class="hint">เปิด Riot Client และล็อกอินค้างไว้ก่อนกดปุ่ม</p>
+  <details><summary>ไม่ได้ใช้ Riot Client? ล็อกอินผ่านเว็บแทน</summary><div class="dbody">
+   <div class="f"><label>1. เปิดหน้า login ของ Riot</label><button id="openlogin" type="button" class="btn w">เปิดหน้า login</button></div>
+   <div class="f"><label for="pasteurl">2. วาง URL ทั้งหมดหลังล็อกอิน</label><input id="pasteurl" placeholder="https://playvalorant.com/opt_in#access_token=..." autocomplete="off"><p class="hint">URL ต้องมีส่วน #access_token=...</p></div>
+   <div class="f"><button id="useurl" type="button" class="btn w">3. ดึงข้อมูลจาก URL</button></div>
+  </div></details>
+ </div>
+ <div class="g"><h2>ข้อมูลไอดี</h2><p class="hint">ดึงมาให้อัตโนมัติหลังเชื่อมต่อ แก้ไขเองได้</p>
+  <div class="row"><div class="f"><label for="rank">แรงก์</label><input id="rank" class="s"></div><div class="f"><label for="rr">RR</label><input id="rr" class="s" inputmode="numeric"></div></div>
+  <div class="f"><label for="lvl">เลเวล / Agent</label><input id="lvl" class="s"></div>
+  <div class="f"><label for="vpv">VP ที่ใช้ซื้อสกิน</label><input id="vpv" class="s"><p class="hint">ราคาจริงในร้าน ไม่รวมสกิน Battle Pass</p></div>
+  <div class="f"><label for="rpv">RP ที่ใช้อัปเกรดสกิน / Variant</label><input id="rpv" class="s"></div>
+  <div class="row3"><div class="f"><label for="vp">VP</label><input id="vp" class="s"></div><div class="f"><label for="rp">RP</label><input id="rp" class="s"></div><div class="f"><label for="kc">KC</label><input id="kc" class="s"></div></div>
+ </div>
+</section>
+
+<section class="pane" id="p-shop" hidden>
+ <div class="g"><h2>ร้านและราคา</h2>
+  <div class="f"><label for="shop">ชื่อร้าน</label><input id="shop" class="s" value="ร้านของฉัน"></div>
+  <div class="row"><div class="f"><label for="code">รหัสไอดี</label><input id="code" class="s" value="AD0001"></div><div class="f"><label for="price">ราคา (บาท)</label><input id="price" class="s" value="8,500"></div></div>
+  <div class="f"><label for="contact">ช่องทางติดต่อ</label><input id="contact" class="s" value="Line: @myidshop"></div>
+ </div>
+ <div class="g"><h2>รายละเอียดเพิ่มเติม</h2>
+  <div class="f"><textarea id="note" class="s" rows="4" aria-label="รายละเอียดเพิ่มเติม" placeholder="เช่น&#10;เมลเปลี่ยนได้ทั้งหมด&#10;ไม่เคยโดนแบน&#10;ได้ Battle Pass ทุกซีซัน"></textarea><p class="hint">พิมพ์ได้หลายบรรทัด</p></div>
+ </div>
+ <div class="g"><h2>QR / โลโก้ร้าน</h2>
+  <div class="f"><input type="file" id="qr" accept="image/*" aria-label="อัปโหลด QR หรือโลโก้"></div>
+  <button class="btn sm gh" id="qrclear" type="button" style="margin-top:8px">ลบรูปที่อัปโหลด</button>
+ </div>
+</section>
+
+<section class="pane" id="p-show" hidden>
+ <div class="g"><h2>ข้อมูลในภาพ</h2><p class="hint">เปิดสวิตช์เพื่อแสดงในภาพ</p>
+  <label class="tg"><span>แรงก์ + RR</span><input type="checkbox" id="sRank" class="s" checked></label>
+  <label class="tg"><span>VP ที่ใช้ซื้อสกิน</span><input type="checkbox" id="sVal" class="s" checked></label>
+  <label class="tg"><span>RP ที่ใช้อัปเกรด</span><input type="checkbox" id="sRPU" class="s" checked></label>
+  <label class="tg"><span>ยอด VP</span><input type="checkbox" id="sVP" class="s" checked></label>
+  <label class="tg"><span>ยอด RP</span><input type="checkbox" id="sRP" class="s" checked></label>
+  <label class="tg"><span>ยอด KC</span><input type="checkbox" id="sKC" class="s" checked></label>
+  <label class="tg"><span>Riot ID</span><input type="checkbox" id="showid" class="s"></label>
+  <label class="tg"><span>รายละเอียดเพิ่มเติม</span><input type="checkbox" id="sNote" class="s" checked></label>
+  <label class="tg"><span>รูป QR / โลโก้</span><input type="checkbox" id="sQR" class="s" checked></label>
+ </div>
+ <div class="g"><h2>สกิน</h2>
+  <div class="f"><label for="minTier">ระดับที่แสดง</label><select id="minTier" class="s"><option value="0">ทุกระดับ</option><option value="1">Deluxe (เขียว) ขึ้นไป</option><option value="2">Premium (ม่วง/ชมพู) ขึ้นไป</option><option value="3">Exclusive (ส้ม) ขึ้นไป</option><option value="4">Ultra (ทอง) เท่านั้น</option></select></div>
+  <label class="tg"><span>ราคา VP บนสกิน</span><input type="checkbox" id="sPrice" class="s" checked></label>
+ </div>
+ <div class="g"><h2>ของสะสม</h2>
+  <label class="tg"><span>Player Card</span><input type="checkbox" id="sCards" class="s" checked></label>
+  <label class="tg"><span>Gun Buddy</span><input type="checkbox" id="sBuddies" class="s" checked></label>
+  <label class="tg"><span>Spray</span><input type="checkbox" id="sSprays" class="s"></label>
+  <label class="tg"><span>Title</span><input type="checkbox" id="sTitles" class="s"></label>
+  <div class="row" style="margin-top:10px"><button class="btn" id="pick" type="button">เลือกรูปเอง</button><button class="btn" id="names" type="button">รายชื่อทั้งหมด</button></div>
+  <div id="pickst" class="hint"></div>
+ </div>
+</section>
+
+<section class="pane" id="p-img" hidden>
+ <div class="g"><h2>ขนาด</h2>
+  <div class="f"><label for="preset">ขนาดรูป</label><select id="preset" class="s"><option value="1920x1080">1920×1080 (แนวนอน)</option><option value="2560x1440">2560×1440 (QHD คมชัดขึ้น)</option><option value="3840x2160">3840×2160 (4K คมชัดที่สุด)</option><option value="1080x1920">1080×1920 (แนวตั้ง)</option><option value="1080x1350">1080×1350 (IG 4:5)</option><option value="1920x0">กว้าง 1920 ความสูงอัตโนมัติ</option><option value="custom">กำหนดเอง</option></select><p class="hint">ระบบย่อให้เห็นทุกสกินในขนาดที่เลือก</p></div>
+  <div class="row"><div class="f"><label for="w">กว้าง (px)</label><input id="w" type="number" class="s" value="1920"></div><div class="f"><label for="h">สูง (0 = อัตโนมัติ)</label><input id="h" type="number" class="s" value="1080"></div></div>
+ </div>
+ <div class="g"><h2>สีกรอบ</h2>
+  <div class="acrow" style="margin-top:8px"><input id="accent" type="color" class="s" value="#d4af5a" aria-label="สีกรอบ">
+   <div class="sws" style="margin:0"><button type="button" data-c="#d4af5a" style="background:#d4af5a" aria-label="ทอง"></button><button type="button" data-c="#ff4655" style="background:#ff4655" aria-label="แดง"></button><button type="button" data-c="#8b7bff" style="background:#8b7bff" aria-label="ม่วง"></button><button type="button" data-c="#3ddc97" style="background:#3ddc97" aria-label="เขียว"></button><button type="button" data-c="#4cc9f0" style="background:#4cc9f0" aria-label="ฟ้า"></button><button type="button" data-c="#ffffff" style="background:#ffffff" aria-label="ขาว"></button></div></div>
+ </div>
+</section>
+
+</div>
+<div class="foot"><button id="dl" type="button" class="btn pri w">ดาวน์โหลด PNG</button></div>
+</aside>
+<main>
+ <div class="pbar"><div id="st" role="status" aria-live="polite">เริ่มที่แท็บ “ไอดี” เพื่อเชื่อมต่อ</div><button class="btn sm" id="retry" type="button">โหลดรูปที่ขาดใหม่</button></div>
+ <canvas id="cv" width="1920" height="1080"></canvas>
+</main></div>
+
+<dialog id="dlg"><div class="dlg">
+<div class="bar"><div class="seg tabs"><button type="button" data-t="buddies">Gun Buddy</button><button type="button" data-t="cards">Player Card</button><button type="button" data-t="sprays">Spray</button></div><span class="grow"></span><button class="btn pri sm" id="pdone" type="button">เสร็จ</button></div>
+<div class="bar"><input type="text" id="pq" placeholder="ค้นหาชื่อ..." autocomplete="off"><label class="chk"><input type="checkbox" id="pall"> แสดงทั้งหมดในฐานข้อมูล</label></div>
+<div class="bar"><button class="btn sm" id="pselall" type="button">เลือกทั้งหมดที่เห็น</button><button class="btn sm" id="pnone" type="button">ยกเลิกทั้งหมดที่เห็น</button><label class="btn sm" style="cursor:pointer">+ อัปโหลดรูปเอง<input type="file" id="pup" accept="image/*" multiple hidden></label><span id="pcount" class="hint"></span></div>
+<div class="hint">คลิกรูปเพื่อเลือก/ยกเลิก รูปที่มีกรอบสีจะแสดงในภาพ • ต้องเปิด “แสดง …” ในแท็บแสดงผลของหมวดนั้นด้วย</div>
+<div id="pgrid"></div></div></dialog>
+<dialog id="ndlg"><div class="dlg">
+<div class="bar"><span class="ttl">รายชื่อทั้งหมดที่มีในไอดี</span><span class="grow"></span><button class="btn sm" id="ncopy" type="button">คัดลอก</button><button class="btn sm" id="ntxt" type="button">บันทึกเป็น .txt</button><button class="btn pri sm" id="nclose" type="button">ปิด</button></div>
+<div class="bar"><label class="chk"><input type="checkbox" id="nG" checked> สกินปืน</label><label class="chk"><input type="checkbox" id="nB" checked> Gun Buddy</label><label class="chk"><input type="checkbox" id="nC" checked> Player Card</label><label class="chk"><input type="checkbox" id="nTier" checked> ระดับสกิน</label><label class="chk"><input type="checkbox" id="nPrice"> ราคา VP</label><span id="ncount" class="hint"></span></div>
+<textarea id="ntext" readonly spellcheck="false"></textarea></div></dialog>
+<script>
+const $=id=>document.getElementById(id),cv=$("cv"),ctx=cv.getContext("2d"),S=[...document.querySelectorAll(".s")];
+const IDX=new Map(),TIERS={},PC=new Map(),BD=new Map(),SP=new Map(),PT=new Map(),LOADED=new Map(),FAILED=new Set();
+const TIERP={Select:875,Deluxe:1275,Premium:1775,Exclusive:2175,Ultra:2475},BP=new Set();
+const estPrice=k=>(TIERP[TIERS[k.tier]?.devName]||0)*(k.cat==="Melee"?2:1);
+let own={skins:[],cards:[],buddies:[],sprays:[],titles:[]},who="",QR="",MSG="เริ่มที่แท็บ “ไอดี” เพื่อเชื่อมต่อ";
+try{const o=JSON.parse(localStorage.v2||"{}");S.forEach(e=>{const v=o[e.id];if(v!=null)e.type==="checkbox"?e.checked=v:e.value=v});QR=localStorage.qr2||""}catch{}
+const save=()=>{try{const o={};S.forEach(e=>o[e.id]=e.type==="checkbox"?e.checked:e.value);localStorage.v2=JSON.stringify(o);localStorage.qr2=QR}catch{}};
+// ---- custom selection of buddies / cards / sprays
+const K3=["buddies","cards","sprays"],MAPS={buddies:BD,cards:PC,sprays:SP},TN={buddies:"Gun Buddy",cards:"Player Card",sprays:"Spray"};
+const SEL={hid:{},add:{},cus:{}};K3.forEach(k=>{SEL.hid[k]=new Set();SEL.add[k]=new Set();SEL.cus[k]=[]});
+try{const o=JSON.parse(localStorage.sel3||"{}");K3.forEach(k=>{(o.hid?.[k]||[]).forEach(x=>SEL.hid[k].add(x));(o.add?.[k]||[]).forEach(x=>SEL.add[k].add(x));SEL.cus[k]=o.cus?.[k]||[]})}catch{}
+let selErr=false;
+const saveSel=()=>{try{const o={hid:{},add:{},cus:SEL.cus};K3.forEach(k=>{o.hid[k]=[...SEL.hid[k]];o.add[k]=[...SEL.add[k]]});localStorage.sel3=JSON.stringify(o);selErr=false}catch{selErr=true}};
+// V(k): final list to draw = owned (not hidden) + added from database + custom uploads
+const V=k=>{const seen=new Set(),out=[],push=x=>{if(x&&!seen.has(x.id)){seen.add(x.id);out.push(x)}};
+  own[k].filter(x=>!SEL.hid[k].has(x.id)).forEach(push);SEL.add[k].forEach(id=>push(MAPS[k].get(id)));SEL.cus[k].forEach(push);return out};
+const RANKS=["Iron","Bronze","Silver","Gold","Platinum","Diamond","Ascendant","Immortal"];
+const rankName=t=>t<3?"Unrated":t>=27?"Radiant":RANKS[Math.floor((t-3)/3)]+" "+((t-3)%3+1);
+const G=u=>fetch("https://valorant-api.com/v1/"+u).then(r=>r.json()).then(j=>j.data);
+async function init(){
+  try{const[wp,ti,pc,sp,bd,pt,co]=await Promise.all([G("weapons"),G("contenttiers"),G("playercards"),G("sprays"),G("buddies"),G("playertitles"),G("contracts").catch(()=>[])]);
+    (co||[]).forEach(c=>{if(!["Season","Event"].includes(c.content?.relationType))return;(c.content.chapters||[]).forEach(h=>[...(h.levels||[]).map(l=>l.reward),...(h.freeRewards||[])].forEach(r=>{if(r&&/SkinLevel|SkinChroma/i.test(r.type))BP.add(String(r.uuid).toLowerCase())}))});
+    ti.forEach(x=>TIERS[x.uuid]=x);
+    wp.forEach(w=>w.skins.forEach(k=>{const icon=[...new Set([k.displayIcon,...k.levels.map(l=>l.displayIcon),...k.chromas.map(c=>c.fullRender),...k.chromas.map(c=>c.displayIcon)].filter(Boolean))];icon.gun=w.category!=="EEquippableCategory::Melee";
+      if(!icon.length||k.displayName===w.displayName||/^Standard|Random Favorite/i.test(k.displayName))return;
+      const o={uuid:k.uuid,name:k.displayName,icon,tier:k.contentTierUuid,w:w.displayName,cat:w.category.split("::")[1],th:k.displayName.replace(w.displayName,"").trim(),lv:k.levels.map(l=>l.uuid)};
+      IDX.set(k.uuid,o);k.levels.forEach(l=>IDX.set(l.uuid,o));k.chromas.forEach(c=>IDX.set(c.uuid,o))}));
+    pc.forEach(c=>PC.set(c.uuid,{id:c.uuid,name:c.displayName,art:[c.largeArt,c.displayIcon].filter(Boolean)}));
+    sp.forEach(c=>SP.set(c.uuid,{id:c.uuid,name:c.displayName,icon:[c.fullTransparentIcon,c.displayIcon].filter(Boolean)}));
+    bd.forEach(b=>(b.levels||[]).forEach(l=>BD.set(l.uuid,{id:l.uuid,name:l.displayName||b.displayName,icon:[l.displayIcon,b.displayIcon].filter(Boolean)})));
+    pt.forEach(c=>{if(c.titleText)PT.set(c.uuid,c.titleText)});
+  }catch{MSG="โหลดฐานข้อมูล valorant-api.com ไม่ได้ ตรวจสอบอินเทอร์เน็ต";$("st").textContent=MSG}draw()}
+
+// ---- image loading: 16 parallel, 3 tries each, fallback URLs
+const KEY=u=>Array.isArray(u)?u[0]:u,im=u=>(u&&LOADED.get(KEY(u)))||null;
+const loadOne=u=>new Promise(r=>{const i=new Image();i.crossOrigin="anonymous";i.onload=()=>r(i);i.onerror=()=>r(null);i.src=u});
+const BAD=new Set();
+const isBlank=i=>{try{const c=document.createElement("canvas");c.width=c.height=24;const x=c.getContext("2d");x.drawImage(i,0,0,24,24);const d=x.getImageData(0,0,24,24).data;for(let p=0;p<d.length;p+=4)if(d[p+3]>20&&d[p]+d[p+1]+d[p+2]>30)return false;return true}catch{return false}};
+async function loadImg(u){const gun=Array.isArray(u)&&u.gun;
+  for(const x of [].concat(u).filter(Boolean))for(let t=0;t<3;t++){
+    const i=await loadOne(t?x+(x.includes("?")?"&":"?")+"r="+t:x);
+    if(i&&Array.isArray(u)&&isBlank(i))break;
+    if(i){const sg=i.width+"x"+i.height,bad=BAD.has(sg)||(gun&&i.width/i.height<1.3);if(!bad)return i;if(gun)BAD.add(sg);break}
+    await new Promise(r=>setTimeout(r,250*(t+1)))}
+  return null}
+async function preload(list,force){
+  const q=[...new Map(list.filter(Boolean).map(u=>[KEY(u),u])).values()].filter(u=>!LOADED.get(KEY(u))&&(force||!FAILED.has(KEY(u))));
+  const total=q.length;let done=0;
+  const worker=async()=>{while(q.length){const u=q.shift(),i=await loadImg(u);LOADED.set(KEY(u),i);i?FAILED.delete(KEY(u)):FAILED.add(KEY(u));done++;if(total>6)$("st").textContent=`กำลังโหลดรูป ${done}/${total}`}};
+  await Promise.all(Array.from({length:16},worker))}
+const allUrls=()=>[...shown().map(s=>s.icon),...shown().map(s=>TIERS[s.tier]?.displayIcon),...V("cards").map(x=>x.art),...V("buddies").map(x=>x.icon),...V("sprays").map(x=>x.icon),QR];
+
+const AUTH="https://auth.riotgames.com/authorize?redirect_uri=https%3A%2F%2Fplayvalorant.com%2Fopt_in&client_id=play-valorant-web-prod&response_type=token%20id_token&nonce=1&scope=account%20openid";
+const uniq=a=>[...new Set((a||[]).map(i=>i.toLowerCase()))];
+async function run(req){
+  $("st").textContent="กำลังดึงข้อมูล...";
+  try{const d=await(await req).json();if(d.error)throw new Error(d.error);const P=d.prices||{};
+    own.skins=[...new Map(d.ids.map(i=>IDX.get(i.toLowerCase())).filter(Boolean).map(k=>[k.uuid,k])).values()].map(k=>{const p=Math.max(0,...k.lv.map(i=>P[i]||0)),bp=k.lv.some(i=>BP.has(i))||BP.has(k.uuid);return{...k,price:p,est:p||bp?0:estPrice(k)}});
+    own.cards=uniq(d.cards).map(i=>PC.get(i)).filter(Boolean);own.buddies=uniq(d.buddies).map(i=>BD.get(i)).filter(Boolean);
+    own.sprays=uniq(d.sprays).map(i=>SP.get(i)).filter(Boolean);own.titles=uniq(d.titles).map(i=>PT.get(i)).filter(Boolean);
+    who=d.name?d.name+"#"+d.tag:"";$("rank").value=rankName(d.tier);$("lvl").value="Lv."+d.level+" / "+d.agents+" Agents";
+    const tv=own.skins.reduce((a,s)=>a+(s.price||s.est||0),0),estN=own.skins.filter(s=>!s.price&&s.est).length;$("vpv").value=tv?tv.toLocaleString("en-US"):"";$("rpv").value=d.rpKnown&&d.rpSpent?d.rpSpent.toLocaleString("en-US"):"";$("rr").value=d.tier>=3&&d.rr!=null?d.rr:"";const wl=d.wallet||{};["vp","rp","kc"].forEach(k=>{if(wl[k]!=null)$(k).value=Number(wl[k]).toLocaleString("en-US")});
+    MSG="สำเร็จ: สกิน "+own.skins.length+", Card "+own.cards.length+", Buddy "+own.buddies.length+(who?" ของ "+who:"")+(d.offersN===0?" | ดึงราคาจากร้านไม่ได้ ใช้ราคามาตรฐานตามระดับทั้งหมด":estN?" | "+estN+" สกินไม่มีราคาในร้าน ใช้ราคามาตรฐานตามระดับ (ประมาณ)":"");
+    $("pasteurl").value="";save();draw();
+  }catch(e){$("st").textContent="ผิดพลาด: "+e.message}}
+$("login").onclick=()=>run(fetch("/api/me?shard="+$("shard").value));
+$("openlogin").onclick=()=>window.open(AUTH,"_blank");
+$("useurl").onclick=()=>run(fetch("/api/url",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({shard:$("shard").value,url:$("pasteurl").value})}));
+$("retry").onclick=()=>draw(true);
+$("qrclear").onclick=()=>{QR="";$("qr").value="";save();draw()};
+$("qr").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{QR=r.result;save();draw()};r.readAsDataURL(f)};
+$("preset").addEventListener("change",e=>{if(e.target.value!=="custom"){const[w,h]=e.target.value.split("x");$("w").value=w;$("h").value=h}save();sched()});
+
+// ---- text wrapping for the free-text details (Thai-aware, cached)
+const MC=document.createElement("canvas").getContext("2d"),WC=new Map();
+const SEGW=window.Intl&&Intl.Segmenter?new Intl.Segmenter("th",{granularity:"word"}):null,SEGG=window.Intl&&Intl.Segmenter?new Intl.Segmenter("th",{granularity:"grapheme"}):null;
+function wrapText(txt,font,maxW){const key=font+"|"+maxW+"|"+txt;if(WC.has(key))return WC.get(key);
+  MC.font=font;const out=[],w=t=>MC.measureText(t).width;
+  txt.split(/\r?\n/).forEach(par=>{
+    if(!par.trim()){out.push("");return}
+    const parts=SEGW?[...SEGW.segment(par)].map(x=>x.segment):[...par];let cur="";
+    parts.forEach(p=>{
+      if(w(cur+p)<=maxW){cur+=p;return}
+      if(cur.trim()){out.push(cur.trimEnd());cur=""}
+      p=cur?cur+p:p.trimStart();cur="";
+      if(w(p)<=maxW){cur=p;return}
+      (SEGG?[...SEGG.segment(p)].map(x=>x.segment):[...p]).forEach(ch=>{if(cur&&w(cur+ch)>maxW){out.push(cur);cur=""}cur+=ch})});
+    if(cur.trim())out.push(cur.trimEnd())});
+  WC.set(key,out);return out}
+// ---- rendering
+const FONT=(w,s)=>`${w} ${Math.max(7,Math.round(s))}px "Noto Sans Thai",Sarabun,"Leelawadee UI",Tahoma,sans-serif`;
+const CATS=[["Sidearm","SIDEARMS  ปืนพก"],["SMG","SMGs  ปืนกลมือ"],["Shotgun","SHOTGUNS  ปืนลูกซอง"],["Rifle","RIFLES  ปืนไรเฟิล"],["Sniper","SNIPERS  ปืนสไนเปอร์"],["Heavy","HEAVY  ปืนหนัก"],["Melee","MELEE  อาวุธมีด"]];
+const rgba=(c,a)=>{const n=parseInt(c.slice(0,6),16);return`rgba(${n>>16},${n>>8&255},${n&255},${a})`};
+const NULLC=new Proxy({},{get:()=>()=>({addColorStop(){}}),set:()=>true});
+const WORDER=["Classic","Shorty","Frenzy","Ghost","Sheriff","Stinger","Spectre","Bucky","Judge","Bulldog","Guardian","Phantom","Vandal","Marshal","Outlaw","Operator","Ares","Odin","Melee"];
+const CATTH={Sidearm:"ปืนพก",SMG:"ปืนกลมือ",Shotgun:"ปืนลูกซอง",Rifle:"ปืนไรเฟิล",Sniper:"สไนเปอร์",Heavy:"ปืนหนัก",Melee:"อาวุธมีด"};
+const wi=w=>{const i=WORDER.indexOf(w);return i<0?99:i};
+const rk=s=>TIERS[s.tier]?.rank??0,shown=()=>{const m=+$("minTier").value||0;return own.skins.filter(s=>rk(s)>=m)},byPrice=(a,b)=>b.price-a.price||rk(b)-rk(a)||a.name.localeCompare(b.name);
+// k = card scale, sp = share of width for weapon column. Returns column heights.
+function render(c0,W,k,sp,nc,paint){
+  const c=paint?c0:NULLC,u=W/1920,GOLD=$("accent").value,m=Math.round(34*u),g=Math.max(3,Math.round(8*k)),hs=Math.max(k,.6*u);
+  const box=(x,y,w,h,col)=>{const gr=c.createLinearGradient(x,y,x+w,y+h);gr.addColorStop(0,rgba(col,.6));gr.addColorStop(1,"rgba(14,7,28,.96)");c.fillStyle=gr;c.fillRect(x,y,w,h);c.strokeStyle=GOLD;c.lineWidth=Math.max(1,2*k);c.strokeRect(x+1,y+1,w-2,h-2)};
+  const fit=(i,x,y,w,h)=>{if(!i)return;const s=Math.min(w/i.width,h/i.height);c.drawImage(i,x+(w-i.width*s)/2,y+(h-i.height*s)/2,i.width*s,i.height*s)};
+  const head=(t,x,y,w)=>{c.textAlign="left";c.fillStyle=GOLD;c.font=FONT(700,22*hs);c.fillText(t,x,y+22*hs);c.fillRect(x,y+26*hs,w,2);return y+34*hs};
+  const sk=shown();
+  c.textAlign="left";c.fillStyle="#fff";c.font=FONT(800,56*u);c.fillText($("shop").value,m,72*u,W*.6);
+  c.fillStyle=GOLD;c.textAlign="right";c.font=FONT(700,30*u);c.fillText($("code").value,W-m-300*u,70*u);
+  c.fillRect(W-m-280*u,28*u,280*u,62*u);c.fillStyle="#1a1030";c.font=FONT(800,46*u);c.fillText($("price").value+".-",W-m-12*u,76*u,256*u);c.textAlign="left";
+  const top=Math.round(108*u),x0=m,fw=W-2*m;
+  // one section per gun (Classic, Ghost, Frenzy...), sections packed into nc newspaper columns
+  const byW={};sk.forEach(q=>(byW[q.w]??=[]).push(q));
+  const secs=Object.entries(byW).map(([w,l])=>({w,l:l.sort(byPrice),cat:l[0].cat})).sort((a,b)=>wi(a.w)-wi(b.w));
+  const sg=Math.round(18*u),wc=(fw-(nc-1)*sg)/nc,cc=Math.max(1,Math.floor((wc+g)/(170*k+g))),cw=(wc-(cc-1)*g)/cc,ch=cw*.46,gapS=10*hs;
+  const sh=secs.map(q=>34*hs+Math.ceil(q.l.length/cc)*(ch+g)+gapS),tot=sh.reduce((a,b)=>a+b,0);
+  const pack=L=>{const cs=[[]],h2=[0];sh.forEach((h,i)=>{let j=cs.length-1;if(h2[j]+h>L&&cs[j].length&&cs.length<nc){cs.push([]);h2.push(0);j++}cs[j].push(i);h2[j]+=h});return{cs,h2}};
+  let lo2=Math.max(0,...sh),hi2=tot;for(let t=0;t<14;t++){const mid=(lo2+hi2)/2;Math.max(...pack(mid).h2)<=mid+.5?hi2=mid:lo2=mid}
+  const{cs,h2}=pack(hi2);let y1=top+Math.max(0,...h2);
+  cs.forEach((ids,ci)=>{let y=top;const x=x0+ci*(wc+sg);ids.forEach(si=>{const q=secs[si],y0=y;
+    y=head(q.w.toUpperCase()+"  ("+q.l.length+")",x,y,wc);c.textAlign="right";c.fillStyle="#8b7fa8";c.font=FONT(500,16*hs);c.fillText(CATTH[q.cat]||"",x+wc,y0+22*hs);c.textAlign="left";
+    q.l.forEach((it,i)=>{const cx=x+(i%cc)*(cw+g),cy=y+Math.floor(i/cc)*(ch+g),t=TIERS[it.tier],nh=cw*.13;
+      box(cx,cy,cw,ch,t?.highlightColor||"8b97a3ff");fit(im(it.icon),cx+3,cy+3,cw-6,ch-nh-5);
+      const ti=im(t?.displayIcon);if(ti)c.drawImage(ti,cx+cw-cw*.12-3,cy+3,cw*.12,cw*.12);
+      c.textAlign="center";c.fillStyle="#fff";c.font=FONT(600,cw*.105);c.fillText(it.th||it.name,cx+cw/2,cy+ch-3,cw-6);
+      if($("sPrice").checked&&it.price&&cw>80){c.textAlign="left";c.fillStyle=GOLD;c.font=FONT(700,cw*.1);c.fillText(it.price.toLocaleString("en-US"),cx+4,cy+cw*.1+2)}c.textAlign="left"});
+    y+=Math.ceil(q.l.length/cc)*(ch+g)+gapS})});
+  // footer under the weapons: info + contact (left), collectibles (right)
+  const yb=y1+Math.round(16*u),wL=Math.round((fw-m)*.3),x1=x0+wL+m,w1=fw-wL-m;
+  const ph=(t,x,y,w,h)=>{c.fillStyle="#8b7fa8";c.textAlign="center";c.font=FONT(600,Math.max(8,w*.16));c.fillText(t||"",x+w/2,y+h/2,w-4);c.textAlign="left"};
+  let yl=yb;
+  const rkOn=$("sRank").checked,rrv=$("rr").value.trim(),rankTxt=($("rank").value||"-")+(rrv!==""?"  •  "+rrv+" RR":""),
+    wl=[["VP","vp","sVP"],["RP","rp","sRP"],["KC","kc","sKC"]].filter(([,i,t])=>$(t).checked&&$(i).value.trim()!=="").map(([n,i])=>n+" "+$(i).value.trim()),
+    val=[$("sVal").checked&&$("vpv").value.trim()!==""?"ใช้ VP ซื้อสกินรวม "+$("vpv").value.trim()+" VP":"",$("sRPU").checked&&$("rpv").value.trim()!==""?"ใช้ RP อัปเกรดรวม "+$("rpv").value.trim()+" RP":""].filter(Boolean),
+    nl=$("sNote").checked&&$("note").value.trim()!==""?wrapText($("note").value.trim(),FONT(600,20*u),wL-28*u):[],
+    ih=Math.round((14+(rkOn?44:0)+26+24+(wl.length?32:0)+val.length*30)*u);
+  box(x0,yl,wL,ih,"3a1f6b");let by=yl+10*u;const tx=x0+14*u,tw=wL-28*u;
+  if(rkOn){by+=34*u;c.fillStyle="#fff";c.font=FONT(800,34*u);c.fillText(rankTxt,tx,by,tw);by+=10*u}
+  by+=22*u;c.fillStyle=GOLD;c.font=FONT(600,22*u);c.fillText(($("lvl").value||"")+($("showid").checked&&who?"   "+who:""),tx,by,tw);by+=4*u;
+  by+=16*u;c.fillStyle="#cfc4e6";c.font=FONT(500,16*u);c.fillText(`Skins ${sk.length}${sk.length<own.skins.length?" ("+own.skins.length+")":""}   Cards ${V("cards").length}   Buddies ${V("buddies").length}`,tx,by,tw);by+=8*u;
+  if(wl.length){by+=24*u;c.fillStyle="#fff";c.font=FONT(700,24*u);c.fillText(wl.join("   •   "),tx,by,tw);by+=8*u}
+  val.forEach(t=>{by+=22*u;c.fillStyle=GOLD;c.font=FONT(600,20*u);c.fillText(t,tx,by,tw);by+=8*u})
+  yl+=ih+10*u;
+  if(nl.length){const th=Math.round(38*u),nh2=Math.round(th+(nl.length*28+18)*u);
+    box(x0,yl,wL,nh2,"4a2a7a");c.fillStyle=GOLD;c.fillRect(x0+1,yl+1,wL-2,th);
+    c.fillStyle="#1a1030";c.font=FONT(800,22*u);c.fillText("รายละเอียดเพิ่มเติม",tx,yl+27*u,tw);
+    c.fillStyle="#fff";c.font=FONT(600,20*u);nl.forEach((t,i)=>c.fillText(t,tx,yl+th+(28*(i+1)+4)*u,tw));
+    yl+=nh2+10*u}
+  const qi=$("sQR").checked?im(QR):null,qh=Math.round((qi?150:76)*u);box(x0,yl,wL,qh,"3a1f6b");c.fillStyle=GOLD;c.font=FONT(700,22*u);c.fillText("สนใจติดต่อ",tx,yl+32*u);
+  c.fillStyle="#fff";c.font=FONT(700,28*u);c.fillText($("contact").value,tx,yl+64*u,qi?wL-190*u:tw);if(qi)fit(qi,x0+wL-136*u,yl+8*u,128*u,qh-16*u);yl+=qh;
+  let y2=yb;
+  const sec=(on,arr,title,colw,ratio,fn)=>{if(!on||!arr.length)return;y2=head(title+"  ("+arr.length+")",x1,y2,w1);const n=Math.max(2,Math.floor((w1+g)/(colw*k+g))),w=(w1-(n-1)*g)/n,h=w*ratio;
+    arr.forEach((a,i)=>fn(a,x1+(i%n)*(w+g),y2+Math.floor(i/n)*(h+g),w,h));y2+=Math.ceil(arr.length/n)*(h+g)+6*hs};
+  sec($("sCards").checked,V("cards"),"PLAYER CARDS",78,2.39,(a,x,y,w,h)=>{box(x,y,w,h,"2a1a4a");const i=im(a.art);i?fit(i,x+2,y+2,w-4,h-4):ph(a.name,x,y,w,h)});
+  sec($("sBuddies").checked,V("buddies"),"GUN BUDDIES",100,1,(a,x,y,w,h)=>{box(x,y,w,h,"2a1a4a");const i=im(a.icon);i?fit(i,x+3,y+3,w-6,h-6):ph(a.name,x,y,w,h)});
+  sec($("sSprays").checked,V("sprays"),"SPRAYS",56,1,(a,x,y,w,h)=>{box(x,y,w,h,"2a1a4a");const i=im(a.icon);i?fit(i,x+3,y+3,w-6,h-6):ph(a.name,x,y,w,h)});
+  if($("sTitles").checked&&own.titles.length){y2=head("TITLES  ("+own.titles.length+")",x1,y2,w1);const lh=Math.max(12,20*k);c.font=FONT(500,14*k);c.fillStyle="#e6dcf5";
+    own.titles.forEach((t,i)=>c.fillText("• "+t,x1+(i%2)*(w1/2),y2+lh*(Math.floor(i/2)+1)-4,w1/2-8));y2+=Math.ceil(own.titles.length/2)*lh+8*hs}
+  const yf=Math.max(yl,y2);
+  return{hl:yf,hr:yf,m,cw}}
+function choose(W,HF){const u=W/1920;if(!HF)return{k:u,sp:1,nc:4};let best=null;
+  const av=W-2*34*u;
+  for(const nc of[2,3,4,5]){if((av-(nc-1)*18*u)/nc<260*u)continue;let lo=.12*u,hi=1.3*u;
+    for(let i=0;i<9;i++){const mid=(lo+hi)/2,r=render(null,W,mid,1,nc,false);Math.max(r.hl,r.hr)+r.m<=HF?lo=mid:hi=mid}
+    const r=render(null,W,lo,1,nc,false);if(Math.max(r.hl,r.hr)+r.m<=HF&&(!best||r.cw>best.cw))best={k:lo,sp:1,nc,cw:r.cw}}
+  return best||{k:.12*u,sp:1,nc:4,cw:0}}
+const oc=document.createElement("canvas");
+function paintAll(){
+  const W=Math.max(600,+$("w").value||1920),HF=+$("h").value||0,f=choose(W,HF);oc.width=W;oc.height=9000;
+  const r=render(oc.getContext("2d"),W,f.k,f.sp,f.nc,true),Hn=Math.min(9000,Math.ceil(Math.max(r.hl,r.hr)+r.m)),s=HF?Math.min(1,HF/Hn):1,H=HF||Hn,GOLD=$("accent").value;
+  cv.width=W;cv.height=H;ctx.imageSmoothingQuality="high";const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#2a1450");bg.addColorStop(1,"#0d0618");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.translate((W-W*s)/2,(H-Hn*s)/2);ctx.scale(s,s);ctx.drawImage(oc,0,0,W,Hn,0,0,W,Hn);ctx.restore();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=4;ctx.strokeRect(2,2,W-4,H-4)}
+let busy=0,timer=0;const sched=()=>{clearTimeout(timer);timer=setTimeout(()=>draw(),200)};
+async function draw(force){const tok=++busy;
+  try{await preload(allUrls(),force);if(tok!==busy)return;paintAll();
+    const miss=shown().filter(s=>!im(s.icon)).length;$("st").textContent=MSG+(miss?` | รูปสกินที่ยังไม่มา ${miss} ชิ้น (ลอง "โหลดรูปที่ขาดใหม่" หรือฐานข้อมูลยังไม่มีรูปสกินนั้น)`:"")}
+  catch(e){$("st").textContent="วาดรูปไม่สำเร็จ: "+e.message}}
+S.forEach(e=>e.addEventListener("input",()=>{save();sched()}));
+$("dl").onclick=async()=>{await draw();const a=document.createElement("a");a.download=($("code").value||"id")+".png";a.href=cv.toDataURL("image/png");a.click()};
+// ---- picker dialog
+let tab="buddies";
+const thumbs=(k,x)=>k==="cards"?[x.art[1],x.art[0]].filter(Boolean):x.icon;
+const upd=()=>{saveSel();sched();$("pickst").textContent="แสดงในภาพ: Buddy "+V("buddies").length+" • Card "+V("cards").length+" • Spray "+V("sprays").length+(selErr?" (บันทึกในเบราว์เซอร์ไม่ได้ รูปอาจใหญ่เกิน)":"")};
+function visible(k){const q=$("pq").value.trim().toLowerCase(),ids=new Set(own[k].map(x=>x.id)),items=[...own[k]];
+  if($("pall").checked)MAPS[k].forEach(x=>{if(!ids.has(x.id))items.push(x)});SEL.cus[k].forEach(x=>items.push(x));
+  return{ids,items:items.filter(x=>!q||(x.name||"").toLowerCase().includes(q))}}
+const isOn=(k,x,ids)=>x.custom?true:ids.has(x.id)?!SEL.hid[k].has(x.id):SEL.add[k].has(x.id);
+function setOn(k,x,ids,v){if(ids.has(x.id))v?SEL.hid[k].delete(x.id):SEL.hid[k].add(x.id);else v?SEL.add[k].add(x.id):SEL.add[k].delete(x.id)}
+function renderPick(){const k=tab,{ids,items}=visible(k),g=$("pgrid");g.innerHTML="";
+  document.querySelectorAll(".tabs button[data-t]").forEach(b=>b.classList.toggle("on",b.dataset.t===k));
+  items.forEach(x=>{const d=document.createElement("div"),on=isOn(k,x,ids);d.className="it"+(on?" on":"");d.title=x.name||"";
+    const i=document.createElement("img");i.crossOrigin="anonymous";i.loading="lazy";i.alt="";const L=thumbs(k,x);let ti=0;const nx=()=>{if(ti<L.length)i.src=L[ti++]};i.onerror=nx;i.onload=()=>{if(isBlank(i))nx()};nx();d.appendChild(i);
+    const n=document.createElement("span");n.textContent=(x.custom?"★ ":"")+(x.name||"-");d.appendChild(n);
+    if(x.custom){const b=document.createElement("button");b.className="x";b.textContent="×";b.title="ลบรูปนี้";b.onclick=e=>{e.stopPropagation();SEL.cus[k]=SEL.cus[k].filter(c=>c.id!==x.id);upd();renderPick()};d.appendChild(b)}
+    d.onclick=()=>{if(x.custom)return;setOn(k,x,ids,!isOn(k,x,ids));d.classList.toggle("on");upd();$("pcount").textContent="เลือกอยู่ "+V(k).length+" รายการ"};
+    g.appendChild(d)});
+  if(!items.length)g.innerHTML='<div class="hint">ไม่มีรายการ — ติ๊ก "แสดงทั้งหมดในฐานข้อมูล" เพื่อเลือกจากทุกรูป หรืออัปโหลดรูปเอง</div>';
+  $("pcount").textContent="เลือกอยู่ "+V(k).length+" รายการ"}
+$("pick").onclick=()=>{$("dlg").showModal();renderPick()};
+$("pdone").onclick=()=>$("dlg").close();
+document.querySelectorAll(".tabs button[data-t]").forEach(b=>b.onclick=()=>{tab=b.dataset.t;renderPick()});
+$("pq").oninput=renderPick;$("pall").onchange=renderPick;
+$("pselall").onclick=()=>{const{ids,items}=visible(tab);items.forEach(x=>setOn(tab,x,ids,true));upd();renderPick()};
+$("pnone").onclick=()=>{const{ids,items}=visible(tab);items.forEach(x=>{if(!x.custom)setOn(tab,x,ids,false)});upd();renderPick()};
+const down=(f,m)=>new Promise(ok=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(i.width*s));c.height=Math.max(1,Math.round(i.height*s));c.getContext("2d").drawImage(i,0,0,c.width,c.height);ok(c.toDataURL("image/png"))};i.onerror=()=>ok(null);i.src=r.result};r.onerror=()=>ok(null);r.readAsDataURL(f)});
+$("pup").onchange=async e=>{const k=tab;for(const f of e.target.files){const u=await down(f,k==="cards"?640:384);if(u)SEL.cus[k].push({id:"c"+Date.now()+Math.random().toString(36).slice(2,6),name:f.name.replace(/\.[^.]+$/,""),icon:[u],art:[u],custom:true})}
+  e.target.value="";upd();renderPick()};
+// ---- full owned-items list as plain text (not drawn on the image)
+function nameText(){
+  const t=$("nTier").checked,p=$("nPrice").checked,L=[],bar="═".repeat(30),num=x=>x.toLocaleString("en-US");
+  const head=title=>{if(L.length)L.push("");L.push(bar,title,bar)};
+  const dist=a=>{const m=new Map();a.forEach(x=>m.set(x.name,(m.get(x.name)||0)+1));return[...m].sort((a,b)=>a[0].localeCompare(b[0]))};
+  if($("nG").checked&&own.skins.length){
+    const by={};own.skins.forEach(s=>(by[s.w]??=[]).push(s));
+    head("สกินปืน ("+own.skins.length+" สกิน)");
+    Object.keys(by).sort((a,b)=>wi(a)-wi(b)||a.localeCompare(b)).forEach(w=>{
+      const l=by[w].sort((a,b)=>rk(b)-rk(a)||a.name.localeCompare(b.name));
+      L.push("","▌ "+w.toUpperCase()+" ("+l.length+")");
+      l.forEach((s,i)=>{const tn=TIERS[s.tier]?.devName;L.push("  "+(i+1)+". "+s.name+(t&&tn?"  ["+tn+"]":"")+(p&&s.price?"  "+num(s.price)+" VP":""))})})}
+  [["nB","Gun Buddy",own.buddies],["nC","Player Card",own.cards]].forEach(([id,title,a])=>{
+    if(!$(id).checked||!a.length)return;head(title+" ("+a.length+")");
+    dist(a).forEach(([nm,c],i)=>L.push("  "+(i+1)+". "+nm+(c>1?" ×"+c:"")))});
+  return L.length?L.join("\n"):"ยังไม่มีข้อมูล กรุณาดึงข้อมูลไอดีก่อน (วิธี A หรือ B) หรือติ๊กหมวดที่ต้องการด้านบน"}
+function fillNames(){const x=nameText();$("ntext").value=x;$("ncount").textContent=own.skins.length+" สกิน • "+own.buddies.length+" Buddy • "+own.cards.length+" Card"}
+$("names").onclick=()=>{$("ndlg").showModal();fillNames()};
+$("nclose").onclick=()=>$("ndlg").close();
+["nG","nB","nC","nTier","nPrice"].forEach(i=>$(i).onchange=fillNames);
+$("ncopy").onclick=async e=>{const b=e.currentTarget,x=$("ntext").value;
+  try{await navigator.clipboard.writeText(x)}catch{$("ntext").select();document.execCommand("copy")}
+  b.textContent="คัดลอกแล้ว ✓";setTimeout(()=>b.textContent="คัดลอก",1500)};
+$("ntxt").onclick=()=>{const a=document.createElement("a");a.download=($("code").value||"id")+"-items.txt";a.href=URL.createObjectURL(new Blob(["\ufeff"+$("ntext").value],{type:"text/plain;charset=utf-8"}));a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+init();upd();
+</script>
+
+<script>
+(()=>{const g=id=>document.getElementById(id),root=document.documentElement;
+const seg=[...document.querySelectorAll("#theme button")];
+const theme=m=>{m==="auto"?root.removeAttribute("data-theme"):root.setAttribute("data-theme",m);seg.forEach(b=>b.classList.toggle("on",b.dataset.m===m));try{localStorage.setItem("theme",m)}catch{}};
+seg.forEach(b=>b.onclick=()=>theme(b.dataset.m));let m="auto";try{m=localStorage.getItem("theme")||"auto"}catch{}theme(m);
+const tabs=[...document.querySelectorAll(".nav button")],panes=[...document.querySelectorAll(".pane")];
+const go=p=>{tabs.forEach(b=>b.setAttribute("aria-selected",String(b.dataset.p===p)));panes.forEach(x=>x.hidden=x.id!=="p-"+p);try{localStorage.setItem("tab",p)}catch{}};
+tabs.forEach(b=>b.onclick=()=>go(b.dataset.p));let t="id";try{t=localStorage.getItem("tab")||"id"}catch{}go(panes.some(x=>x.id==="p-"+t)?t:"id");
+document.querySelectorAll(".sws button").forEach(b=>b.onclick=()=>{const a=g("accent");a.value=b.dataset.c;a.dispatchEvent(new Event("input",{bubbles:true}))});
+})();
+</script>
+</body></html>

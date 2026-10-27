@@ -1,0 +1,1 @@
+module.exports = (req, res) => { res.setHeader('Cache-Control','no-store'); res.status(410).json({error:'Riot Client บนคอมพิวเตอร์ของคุณไม่สามารถเข้าถึงจาก Vercel ได้ กรุณาใช้ตัวเลือกล็อกอินผ่านเว็บ Riot แทน'}); };

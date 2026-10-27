@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เช็คร้านค้า Valorant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0618;--panel:#15102a;--sub:#1d1440;--line:#2b2150;--txt:#ece8f6;--mut:#9a8fb8;--ac:#d4af5a;--red:#ff4655;--danger:#e0605e}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:radial-gradient(1000px 500px at 85% -10%,#2a1450 0,transparent 60%),var(--bg);color:var(--txt);font:14px/1.55 "IBM Plex Sans Thai","Noto Sans Thai",Sarabun,Tahoma,sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 40px}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.logo{font-weight:700;display:flex;gap:10px;align-items:center}.logo i{width:12px;height:12px;background:var(--red);transform:rotate(45deg)}
+nav{display:flex;gap:18px;color:var(--mut)}nav a:hover,nav a.on{color:var(--txt)}
+h1{margin:10px 0 4px;font-size:28px}.mut{color:var(--mut)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:4px}
+input,select{background:#0f0a20;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:9px 10px;font:inherit}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.btn{font:inherit;font-weight:600;border-radius:8px;padding:9px 16px;border:1px solid var(--line);background:var(--sub);color:var(--txt);cursor:pointer}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:#1a1030}.btn:hover{filter:brightness(1.1)}
+details{margin-top:14px;border:1px solid var(--line);border-radius:10px;background:#120c26}
+summary{padding:10px 12px;cursor:pointer;color:var(--mut)}.db{padding:0 12px 12px;display:grid;gap:10px}
+.db input{width:100%}
+#st{margin-top:12px;color:var(--mut);min-height:20px}#st.err{color:var(--danger)}
+h2.s{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:28px 0 10px;font-size:18px;border-bottom:2px solid var(--ac);padding-bottom:6px}
+.tm{font-size:13px;color:var(--ac);font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.it{position:relative;border:2px solid var(--line);border-radius:12px;padding:12px;background:linear-gradient(150deg,var(--c,#3a1f6b),#0e071c);display:flex;flex-direction:column;gap:8px}
+.it .im{height:92px;display:grid;place-items:center}.it img{max-width:100%;max-height:92px;object-fit:contain}
+.it .nm{font-weight:600;line-height:1.3}.it .tr{display:flex;align-items:center;gap:6px;color:var(--mut);font-size:12.5px}
+.it .tr img{width:16px;height:16px}
+.pr{display:flex;align-items:baseline;gap:8px;margin-top:auto;font-weight:700;color:var(--ac);font-size:17px}
+.pr s{color:var(--mut);font-weight:400;font-size:13px}
+.bd{position:absolute;top:8px;right:8px;background:var(--red);color:#fff;font-weight:700;font-size:12px;padding:2px 8px;border-radius:99px}
+.wal{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-weight:600}.wal span{color:var(--mut);font-weight:400;margin-right:4px}
+.empty{color:var(--mut);padding:12px 0}
+</style></head><body><div class="wrap">
+<header><a class="logo" href="/"><i></i>Valorant Toolkit</a><nav><a href="/">หน้าแรก</a><a href="/store" class="on">ร้านค้า</a><a href="/maker">ID Maker</a></nav></header>
+<h1>เช็คร้านค้า Valorant</h1><div class="mut">ดูร้านประจำวัน Night Market และ Accessory ของไอดีที่ล็อกอิน</div>
+
+<div class="panel">
+ <div class="row">
+  <div><label for="shard">Region</label><select id="shard"><option value="ap">ap (ไทย/เอเชีย)</option><option value="na">na</option><option value="eu">eu</option><option value="kr">kr</option></select></div>
+  <button id="login" class="btn pri" type="button">เชื่อมต่อ Riot Client (ใช้ได้เฉพาะเครื่อง)</button>
+ </div>
+ <div class="mut" style="margin-top:6px;font-size:12.5px">เปิด Riot Client และล็อกอินค้างไว้ก่อนกดปุ่ม</div>
+ <details><summary>ไม่ได้ใช้ Riot Client? ล็อกอินผ่านเว็บแทน</summary><div class="db">
+  <div><button id="openlogin" class="btn" type="button">1. เปิดหน้า login ของ Riot</button></div>
+  <div><label for="pasteurl">2. วาง URL ทั้งหมดหลังล็อกอิน (ต้องมี #access_token=...)</label><input id="pasteurl" placeholder="https://playvalorant.com/opt_in#access_token=..." autocomplete="off"></div>
+  <div><button id="useurl" class="btn" type="button">3. ดึงร้านค้าจาก URL</button></div>
+ </div></details>
+ <div id="st" role="status" aria-live="polite"></div>
+</div>
+
+<div id="out" hidden>
+ <div class="panel"><b id="who"></b><div class="wal" id="wal"></div></div>
+ <h2 class="s"><span>ร้านประจำวัน</span><span class="tm" id="t-daily"></span></h2><div class="grid" id="daily"></div>
+ <div id="nightbox"><h2 class="s"><span>Night Market</span><span class="tm" id="t-night"></span></h2><div class="grid" id="night"></div></div>
+ <h2 class="s"><span>Accessory Store</span><span class="tm" id="t-acc"></span></h2><div class="grid" id="acc"></div>
+</div>
+</div>
+<script>
+const $=id=>document.getElementById(id),G=u=>fetch("https://valorant-api.com/v1/"+u).then(r=>r.json()).then(j=>j.data);
+const AUTH="https://auth.riotgames.com/authorize?redirect_uri=https%3A%2F%2Fplayvalorant.com%2Fopt_in&client_id=play-valorant-web-prod&response_type=token%20id_token&nonce=1&scope=account%20openid";
+const CUR={"85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741":"VP","e59aa87c-4cbf-517a-5983-6e81511be9b7":"RP","85ca954a-41f2-ce94-9b45-8ca3dd39a00d":"KC"};
+const TY={card:"3f296c07-64c3-494c-923b-fe692a4fa1bd",spray:"d5f120f8-ff8c-4aac-92ea-f2b5acbe9475",buddy:"dd3bf334-87f3-40bd-b043-682a57a8dc3a",title:"de7caa6b-adf7-4588-bbd1-143831e786c6"};
+const TYN={[TY.card]:"Player Card",[TY.spray]:"Spray",[TY.buddy]:"Gun Buddy",[TY.title]:"Title"};
+const SK=new Map(),TIERS={},AC=new Map();let ready=null,ends={};
+const st=(m,e)=>{$("st").textContent=m;$("st").className=e?"err":""};
+function catalog(){return ready??=(async()=>{
+  const[wp,ti,pc,sp,bd,pt]=await Promise.all([G("weapons"),G("contenttiers"),G("playercards"),G("sprays"),G("buddies"),G("playertitles")]);
+  ti.forEach(x=>TIERS[x.uuid]=x);
+  wp.forEach(w=>w.skins.forEach(k=>k.levels.forEach((l,i)=>SK.set(l.uuid.toLowerCase(),{name:l.displayName||k.displayName,icon:l.displayIcon||k.displayIcon||k.levels[0]?.displayIcon,tier:k.contentTierUuid}))));
+  pc.forEach(c=>AC.set(c.uuid,{name:c.displayName,icon:c.displayIcon||c.largeArt}));
+  sp.forEach(c=>AC.set(c.uuid,{name:c.displayName,icon:c.fullTransparentIcon||c.displayIcon}));
+  bd.forEach(b=>(b.levels||[]).forEach(l=>AC.set(l.uuid,{name:l.displayName||b.displayName,icon:l.displayIcon||b.displayIcon})));
+  pt.forEach(t=>AC.set(t.uuid,{name:t.titleText||t.displayName,icon:""}))})()}
+const fmt=n=>n==null?"-":Number(n).toLocaleString("en-US");
+function card(it,kind){
+  const s=SK.get(String(it.id).toLowerCase())||AC.get(it.id)||{name:"ไม่ทราบชื่อ ("+String(it.id).slice(0,8)+")",icon:""},t=TIERS[s.tier],col=t?"#"+t.highlightColor.slice(0,6):"";
+  const d=document.createElement("div");d.className="it";if(col)d.style.setProperty("--c",col+"99");
+  const cur=kind==="acc"?(CUR[it.currency]||"")+" ":"VP ";
+  d.innerHTML=(it.percent?`<span class="bd">-${it.percent}%</span>`:"")+`<div class="im">${s.icon?`<img alt="" src="${s.icon}" loading="lazy">`:""}</div><div class="nm"></div><div class="tr">${t?`<img alt="" src="${t.displayIcon}">${t.devName}`:(kind==="acc"?TYN[it.type]||"":"")}</div>
+  <div class="pr">${it.discounted!=null?`${cur}${fmt(it.discounted)} <s>${fmt(it.price)}</s>`:`${cur}${fmt(it.price)}`}</div>`;
+  d.querySelector(".nm").textContent=s.name;return d}
+function fill(id,list,kind,empty){const g=$(id);g.innerHTML="";if(!list||!list.length){g.innerHTML=`<div class="empty">${empty}</div>`;return}list.forEach(x=>g.appendChild(card(x,kind)))}
+const hms=s=>{if(s<=0)return"หมดเวลา";const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),c=s%60,p=n=>String(n).padStart(2,"0");return"เหลือ "+(d?d+" วัน ":"")+p(h)+":"+p(m)+":"+p(c)}
+function tick(){const n=Date.now();[["daily","t-daily"],["night","t-night"],["acc","t-acc"]].forEach(([k,id])=>{$(id).textContent=ends[k]==null?"":hms(Math.round((ends[k]-n)/1000))})}
+setInterval(tick,1000);
+async function run(req){
+  st("กำลังดึงร้านค้า...");
+  try{if(location.protocol==="file:")throw new Error("เปิดไฟล์ตรงๆ ไม่ได้ ให้รัน node server.js แล้วเปิด http://localhost:3000/store");
+    let res;try{res=await req}catch{throw new Error("เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ ตรวจสอบว่ารัน node server.js อยู่ และเปิดผ่าน http://localhost:3000/store")}
+    try{await catalog()}catch{throw new Error("โหลดฐานข้อมูลจาก valorant-api.com ไม่ได้ ตรวจสอบอินเทอร์เน็ต")}
+    let d;try{d=await res.json()}catch{throw new Error("เซิร์ฟเวอร์ตอบกลับผิดรูปแบบ ปิดแล้วรัน node server.js ใหม่ (อาจยังเป็นเวอร์ชันเก่า)")}
+    if(d.error)throw new Error(d.error);
+    const n=Date.now();ends={daily:d.dailyLeft!=null?n+d.dailyLeft*1000:null,night:d.nightLeft!=null?n+d.nightLeft*1000:null,acc:d.accessoryLeft!=null?n+d.accessoryLeft*1000:null};
+    $("who").textContent=d.name?d.name+"#"+d.tag:"ร้านค้าของคุณ";
+    $("wal").innerHTML=["vp","rp","kc"].map(k=>`<div><span>${k.toUpperCase()}</span>${fmt(d.wallet[k])}</div>`).join("");
+    fill("daily",d.daily,"daily","ไม่มีข้อมูลร้านประจำวัน");
+    $("nightbox").hidden=!d.night;if(d.night)fill("night",d.night,"night","");
+    fill("acc",d.accessory,"acc","ไม่มีข้อมูล Accessory Store");
+    $("out").hidden=false;$("pasteurl").value="";tick();st("อัปเดตแล้ว "+new Date().toLocaleTimeString("th-TH"));
+  }catch(e){st("ผิดพลาด: "+e.message,true)}}
+$("login").onclick=()=>run(fetch("/api/store?shard="+$("shard").value));
+$("openlogin").onclick=()=>window.open(AUTH,"_blank");
+$("useurl").onclick=()=>run(fetch("/api/store-url",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({shard:$("shard").value,url:$("pasteurl").value})}));
+try{const s=localStorage.getItem("shard");if(s)$("shard").value=s}catch{}
+$("shard").onchange=()=>{try{localStorage.setItem("shard",$("shard").value)}catch{}};
+</script></body></html>

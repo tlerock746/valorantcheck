@@ -1,0 +1,7 @@
+{
+  "name": "valorant-toolkit-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Valorant Toolkit static pages and Vercel Functions",
+  "engines": { "node": ">=18.x" }
+}
