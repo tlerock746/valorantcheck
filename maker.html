@@ -221,12 +221,13 @@ const uniq=a=>[...new Set((a||[]).map(i=>i.toLowerCase()))];
 async function run(req){
   $("st").textContent="กำลังดึงข้อมูล...";
   try{const d=await(await req).json();if(d.error)throw new Error(d.error);const P=d.prices||{};
-    own.skins=[...new Map(d.ids.map(i=>IDX.get(i.toLowerCase())).filter(Boolean).map(k=>[k.uuid,k])).values()].map(k=>{const p=Math.max(0,...k.lv.map(i=>P[i]||0)),bp=k.lv.some(i=>BP.has(i))||BP.has(k.uuid);return{...k,price:p,est:p||bp?0:estPrice(k)}});
+    const have=new Set((d.ids||[]).map(i=>String(i).toLowerCase()));
+    own.skins=[...new Map((d.ids||[]).map(i=>IDX.get(String(i).toLowerCase())).filter(k=>k&&k.lv.length&&have.has(String(k.lv[0]).toLowerCase())).map(k=>[k.uuid,k])).values()].map(k=>{const p=Math.max(0,...k.lv.map(i=>P[i]||0)),bp=k.lv.some(i=>BP.has(i))||BP.has(k.uuid);return{...k,price:p,est:p||bp?0:estPrice(k)}});
     own.cards=uniq(d.cards).map(i=>PC.get(i)).filter(Boolean);own.buddies=uniq(d.buddies).map(i=>BD.get(i)).filter(Boolean);
     own.sprays=uniq(d.sprays).map(i=>SP.get(i)).filter(Boolean);own.titles=uniq(d.titles).map(i=>PT.get(i)).filter(Boolean);
     who=d.name?d.name+"#"+d.tag:"";$("rank").value=rankName(d.tier);$("lvl").value="Lv."+d.level+" / "+d.agents+" Agents";
     const tv=own.skins.reduce((a,s)=>a+(s.price||s.est||0),0),estN=own.skins.filter(s=>!s.price&&s.est).length;$("vpv").value=tv?tv.toLocaleString("en-US"):"";$("rpv").value=d.rpKnown&&d.rpSpent?d.rpSpent.toLocaleString("en-US"):"";$("rr").value=d.tier>=3&&d.rr!=null?d.rr:"";const wl=d.wallet||{};["vp","rp","kc"].forEach(k=>{if(wl[k]!=null)$(k).value=Number(wl[k]).toLocaleString("en-US")});
-    MSG="สำเร็จ: สกิน "+own.skins.length+", Card "+own.cards.length+", Buddy "+own.buddies.length+(who?" ของ "+who:"")+(d.offersN===0?" | ดึงราคาจากร้านไม่ได้ ใช้ราคามาตรฐานตามระดับทั้งหมด":estN?" | "+estN+" สกินไม่มีราคาในร้าน ใช้ราคามาตรฐานตามระดับ (ประมาณ)":"");
+    MSG="สำเร็จ: สกิน "+own.skins.length+" (Riot ส่งรหัสมา "+(d.ids||[]).length+" รายการ), Card "+own.cards.length+", Buddy "+own.buddies.length+(who?" ของ "+who:"")+(d.offersN===0?" | ดึงราคาจากร้านไม่ได้ ใช้ราคามาตรฐานตามระดับทั้งหมด":estN?" | "+estN+" สกินไม่มีราคาในร้าน ใช้ราคามาตรฐานตามระดับ (ประมาณ)":"");
     $("pasteurl").value="";save();draw();
   }catch(e){$("st").textContent="ผิดพลาด: "+e.message}}
 $("login").onclick=()=>run(fetch("/api/me?shard="+$("shard").value));
