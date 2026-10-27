@@ -69,7 +69,7 @@ dialog::backdrop{background:rgba(8,9,13,.6)}
 <aside>
 <div class="top">
  <div class="brand"><h1>Valorant ID Maker</h1><span style="font-size:12.5px;display:flex;gap:10px"><a href="/" style="color:var(--mut)">หน้าแรก</a><a href="/store" style="color:var(--mut)">ร้านค้า</a></span><div class="seg" id="theme" role="group" aria-label="ธีม"><button type="button" data-m="auto">ระบบ</button><button type="button" data-m="light">สว่าง</button><button type="button" data-m="dark">มืด</button></div></div>
- <div class="nav" role="tablist"><button type="button" role="tab" data-p="id">ไอดี</button><button type="button" role="tab" data-p="shop">ร้านค้า</button><button type="button" role="tab" data-p="show">แสดงผล</button><button type="button" role="tab" data-p="img">ภาพ</button><button type="button" role="tab" data-p="list">รายชื่อ</button></div>
+ <div class="nav" role="tablist"><button type="button" role="tab" data-p="id">ไอดี</button><button type="button" role="tab" data-p="shop">ร้านค้า</button><button type="button" role="tab" data-p="show">แสดงผล</button><button type="button" role="tab" data-p="img">ภาพ</button></div>
 </div>
 <div class="panes">
 
@@ -129,7 +129,7 @@ dialog::backdrop{background:rgba(8,9,13,.6)}
   <label class="tg"><span>Gun Buddy</span><input type="checkbox" id="sBuddies" class="s" checked></label>
   <label class="tg"><span>Spray</span><input type="checkbox" id="sSprays" class="s"></label>
   <label class="tg"><span>Title</span><input type="checkbox" id="sTitles" class="s"></label>
-  <div class="row" style="margin-top:10px"><button class="btn" id="pick" type="button">เลือกรูปเอง</button><button class="btn" id="names" type="button">รายชื่อทั้งหมด</button></div>
+  <div class="row" style="margin-top:10px"><button class="btn" id="pick" type="button">เลือกรูปเอง</button><button class="btn" id="names" type="button">รายชื่อสกิน (.txt)</button></div>
   <div id="pickst" class="hint"></div>
  </div>
 </section>
@@ -143,23 +143,6 @@ dialog::backdrop{background:rgba(8,9,13,.6)}
   <div class="acrow" style="margin-top:8px"><input id="accent" type="color" class="s" value="#d4af5a" aria-label="สีกรอบ">
    <div class="sws" style="margin:0"><button type="button" data-c="#d4af5a" style="background:#d4af5a" aria-label="ทอง"></button><button type="button" data-c="#ff4655" style="background:#ff4655" aria-label="แดง"></button><button type="button" data-c="#8b7bff" style="background:#8b7bff" aria-label="ม่วง"></button><button type="button" data-c="#3ddc97" style="background:#3ddc97" aria-label="เขียว"></button><button type="button" data-c="#4cc9f0" style="background:#4cc9f0" aria-label="ฟ้า"></button><button type="button" data-c="#ffffff" style="background:#ffffff" aria-label="ขาว"></button></div></div>
  </div>
-</section>
-
-<section class="pane" id="p-list" hidden>
- <div class="g"><h2>โหลดรายชื่อเป็นไฟล์ Notepad</h2><p class="hint">รายชื่อไอเทมทั้งหมดในเกม (ไม่ต้องล็อกอิน) ไม่เกี่ยวกับรูปที่สร้าง</p>
-  <label class="tg"><span>สกินปืน</span><input type="checkbox" class="lc" value="skins" checked></label>
-  <label class="tg"><span>Buddy</span><input type="checkbox" class="lc" value="buddies" checked></label>
-  <label class="tg"><span>Player Card</span><input type="checkbox" class="lc" value="cards"></label>
-  <label class="tg"><span>Spray</span><input type="checkbox" class="lc" value="sprays"></label>
-  <label class="tg"><span>Title</span><input type="checkbox" class="lc" value="titles"></label>
- </div>
- <div class="g"><h2>ตัวเลือก</h2>
-  <label class="tg"><span>จัดกลุ่มสกินตามปืน</span><input type="checkbox" id="lGroup" checked></label>
-  <label class="tg"><span>ใส่เลขลำดับ</span><input type="checkbox" id="lNum"></label>
-  <label class="tg"><span>รวมสกินมาตรฐาน / Random</span><input type="checkbox" id="lStd"></label>
-  <div class="f"><label for="lLang">ภาษาชื่อไอเทม</label><select id="lLang"><option value="th-TH">ไทย</option><option value="en-US">English</option></select></div>
- </div>
- <div class="g"><button class="btn pri w" id="lDl" type="button">ดาวน์โหลดไฟล์ .txt</button><p class="hint" id="lSt" role="status" aria-live="polite"></p></div>
 </section>
 
 </div>
@@ -177,8 +160,8 @@ dialog::backdrop{background:rgba(8,9,13,.6)}
 <div class="hint">คลิกรูปเพื่อเลือก/ยกเลิก รูปที่มีกรอบสีจะแสดงในภาพ • ต้องเปิด “แสดง …” ในแท็บแสดงผลของหมวดนั้นด้วย</div>
 <div id="pgrid"></div></div></dialog>
 <dialog id="ndlg"><div class="dlg">
-<div class="bar"><span class="ttl">รายชื่อทั้งหมดที่มีในไอดี</span><span class="grow"></span><button class="btn sm" id="ncopy" type="button">คัดลอก</button><button class="btn sm" id="ntxt" type="button">บันทึกเป็น .txt</button><button class="btn pri sm" id="nclose" type="button">ปิด</button></div>
-<div class="bar"><label class="chk"><input type="checkbox" id="nG" checked> สกินปืน</label><label class="chk"><input type="checkbox" id="nB" checked> Gun Buddy</label><label class="chk"><input type="checkbox" id="nC" checked> Player Card</label><label class="chk"><input type="checkbox" id="nTier" checked> ระดับสกิน</label><label class="chk"><input type="checkbox" id="nPrice"> ราคา VP</label><span id="ncount" class="hint"></span></div>
+<div class="bar"><span class="ttl">รายชื่อสกินที่มีในไอดี</span><span class="grow"></span><button class="btn sm" id="ncopy" type="button">คัดลอก</button><button class="btn sm" id="ntxt" type="button">บันทึกเป็น .txt</button><button class="btn pri sm" id="nclose" type="button">ปิด</button></div>
+<div class="bar"><label class="chk"><input type="checkbox" id="nTier"> ระดับสกิน</label><label class="chk"><input type="checkbox" id="nPrice"> ราคา VP</label><span id="ncount" class="hint"></span></div>
 <textarea id="ntext" readonly spellcheck="false"></textarea></div></dialog>
 <script>
 const $=id=>document.getElementById(id),cv=$("cv"),ctx=cv.getContext("2d"),S=[...document.querySelectorAll(".s")];
@@ -391,26 +374,22 @@ $("pup").onchange=async e=>{const k=tab;for(const f of e.target.files){const u=a
 function nameText(){
   const t=$("nTier").checked,p=$("nPrice").checked,L=[],bar="═".repeat(30),num=x=>x.toLocaleString("en-US");
   const head=title=>{if(L.length)L.push("");L.push(bar,title,bar)};
-  const dist=a=>{const m=new Map();a.forEach(x=>m.set(x.name,(m.get(x.name)||0)+1));return[...m].sort((a,b)=>a[0].localeCompare(b[0]))};
-  if($("nG").checked&&own.skins.length){
+  if(own.skins.length){
     const by={};own.skins.forEach(s=>(by[s.w]??=[]).push(s));
     head("สกินปืน ("+own.skins.length+" สกิน)");
     Object.keys(by).sort((a,b)=>wi(a)-wi(b)||a.localeCompare(b)).forEach(w=>{
       const l=by[w].sort((a,b)=>rk(b)-rk(a)||a.name.localeCompare(b.name));
       L.push("","▌ "+w.toUpperCase()+" ("+l.length+")");
       l.forEach((s,i)=>{const tn=TIERS[s.tier]?.devName;L.push("  "+(i+1)+". "+s.name+(t&&tn?"  ["+tn+"]":"")+(p&&s.price?"  "+num(s.price)+" VP":""))})})}
-  [["nB","Gun Buddy",own.buddies],["nC","Player Card",own.cards]].forEach(([id,title,a])=>{
-    if(!$(id).checked||!a.length)return;head(title+" ("+a.length+")");
-    dist(a).forEach(([nm,c],i)=>L.push("  "+(i+1)+". "+nm+(c>1?" ×"+c:"")))});
-  return L.length?L.join("\n"):"ยังไม่มีข้อมูล กรุณาดึงข้อมูลไอดีก่อน (วิธี A หรือ B) หรือติ๊กหมวดที่ต้องการด้านบน"}
-function fillNames(){const x=nameText();$("ntext").value=x;$("ncount").textContent=own.skins.length+" สกิน • "+own.buddies.length+" Buddy • "+own.cards.length+" Card"}
+  return L.length?L.join("\n"):"ยังไม่มีข้อมูล กรุณาดึงข้อมูลไอดีก่อน (วิธี A หรือ B)"}
+function fillNames(){const x=nameText();$("ntext").value=x;$("ncount").textContent=own.skins.length+" สกิน"}
 $("names").onclick=()=>{$("ndlg").showModal();fillNames()};
 $("nclose").onclick=()=>$("ndlg").close();
-["nG","nB","nC","nTier","nPrice"].forEach(i=>$(i).onchange=fillNames);
+["nTier","nPrice"].forEach(i=>$(i).onchange=fillNames);
 $("ncopy").onclick=async e=>{const b=e.currentTarget,x=$("ntext").value;
   try{await navigator.clipboard.writeText(x)}catch{$("ntext").select();document.execCommand("copy")}
   b.textContent="คัดลอกแล้ว ✓";setTimeout(()=>b.textContent="คัดลอก",1500)};
-$("ntxt").onclick=()=>{const a=document.createElement("a");a.download=($("code").value||"id")+"-items.txt";a.href=URL.createObjectURL(new Blob(["\ufeff"+$("ntext").value],{type:"text/plain;charset=utf-8"}));a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+$("ntxt").onclick=()=>{const a=document.createElement("a");a.download=($("code").value||"id")+"-skins.txt";a.href=URL.createObjectURL(new Blob(["\ufeff"+$("ntext").value],{type:"text/plain;charset=utf-8"}));a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
 init();upd();
 </script>
 
@@ -423,36 +402,6 @@ const tabs=[...document.querySelectorAll(".nav button")],panes=[...document.quer
 const go=p=>{tabs.forEach(b=>b.setAttribute("aria-selected",String(b.dataset.p===p)));panes.forEach(x=>x.hidden=x.id!=="p-"+p);try{localStorage.setItem("tab",p)}catch{}};
 tabs.forEach(b=>b.onclick=()=>go(b.dataset.p));let t="id";try{t=localStorage.getItem("tab")||"id"}catch{}go(panes.some(x=>x.id==="p-"+t)?t:"id");
 document.querySelectorAll(".sws button").forEach(b=>b.onclick=()=>{const a=g("accent");a.value=b.dataset.c;a.dispatchEvent(new Event("input",{bubbles:true}))});
-})();
-</script>
-<script>
-(()=>{const API="https://valorant-api.com/v1/",STD="5a629df4-4765-0214-bd40-fbb96542941f",cache={},g=id=>document.getElementById(id);
-const LB={skins:"สกินปืน",buddies:"Buddy",cards:"Player Card",sprays:"Spray",titles:"Title"},PA={skins:"weapons",buddies:"buddies",cards:"playercards",sprays:"sprays",titles:"playertitles"};
-const say=(t,e)=>{const s=g("lSt");s.textContent=t;s.style.color=e?"var(--danger)":""};
-const get=async(p,l)=>{const k=p+l;if(cache[k])return cache[k];const r=await fetch(API+p+"?language="+l);if(!r.ok)throw new Error(p+" "+r.status);return cache[k]=(await r.json()).data};
-const uniq=(a,l)=>[...new Set(a.filter(Boolean).map(x=>x.trim()))].sort((x,y)=>x.localeCompare(y,l));
-const lines=(a,n)=>{const w=String(a.length).length;return a.map((x,i)=>n?String(i+1).padStart(w," ")+". "+x:"- "+x)};
-async function build(c,o){const d=await get(PA[c],o.lang);
- if(c==="skins"){const rows=[];
-  d.slice().sort((a,b)=>a.displayName.localeCompare(b.displayName,o.lang)).forEach(w=>{
-   const n=uniq(w.skins.filter(s=>o.std||(s.uuid!==w.defaultSkinUuid&&s.themeUuid!==STD&&!/random favorite|สุ่ม/i.test(s.displayName))).map(s=>s.displayName),o.lang);
-   if(n.length)rows.push({w:w.displayName,n})});
-  const total=rows.reduce((t,r)=>t+r.n.length,0);let body=[];
-  if(o.group)rows.forEach(r=>{body.push("["+r.w+"] ("+r.n.length+")",...lines(r.n,o.num),"")});
-  else body=lines(uniq(rows.flatMap(r=>r.n.map(x=>x+" ("+r.w+")")),o.lang),o.num);
-  return{t:LB[c],c:total,b:body}}
- const out=uniq(d.map(x=>x.displayName||x.titleText),o.lang);return{t:LB[c],c:out.length,b:lines(out,o.num)}}
-g("lDl").onclick=async()=>{const sel=[...document.querySelectorAll(".lc:checked")].map(i=>i.value);
- if(!sel.length)return say("เลือกอย่างน้อย 1 หมวดก่อน",1);
- const o={lang:g("lLang").value,group:g("lGroup").checked,num:g("lNum").checked,std:g("lStd").checked},btn=g("lDl");
- btn.disabled=true;say("กำลังโหลดข้อมูล...");
- try{const date=new Date().toISOString().slice(0,10),parts=[];let sum=0;
-  for(const c of sel){const r=await build(c,o);sum+=r.c;parts.push("==== "+r.t+" ("+r.c+") ====",...r.b,"")}
-  const txt=["Valorant - รายชื่อไอเทมทั้งหมด","สร้างเมื่อ "+date+" | ข้อมูลจาก valorant-api.com","รวม "+sum+" รายการ","",...parts].join("\r\n");
-  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+txt],{type:"text/plain;charset=utf-8"}));a.download="valorant-list-"+date+".txt";
-  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);say("ดาวน์โหลดแล้ว • "+sum+" รายการ")}
- catch(e){say("โหลดข้อมูลไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองอีกครั้ง",1);console.error(e)}
- finally{btn.disabled=false}};
 })();
 </script>
 </body></html>
